@@ -1,0 +1,1918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hack Your College Life | 5 AI Agents for Freshman Success</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Graduate&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --navy: #0d1f3c;
+      --navy-light: #18335d;
+      --maroon: #6e101f;
+      --maroon-dark: #500a15;
+      --gold: #d89e27;
+      --gold-light: #f5b738;
+      --gold-soft: #fdf5df;
+      --paper: #fffdf5;
+      --paper-rule: #cde0f7;
+      --paper-margin: #e63946;
+      --ink: #1e293b;
+      --ink-muted: #64748b;
+      --card-bg: #ffffff;
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.06);
+      --shadow-md: 0 6px 14px rgba(0,0,0,0.08);
+      --shadow-lg: 0 12px 28px rgba(0,0,0,0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--ink);
+      background-color: #f1eddf;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ----------------------------------------------------
+       VARSITY HEADER
+    ---------------------------------------------------- */
+    .varsity-header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 60%, var(--maroon) 100%);
+      color: #fff;
+      border-bottom: 5px solid var(--gold);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-stripe {
+      height: 4px;
+      background: repeating-linear-gradient(90deg, var(--gold), var(--gold) 20px, var(--maroon) 20px, var(--maroon) 40px);
+    }
+
+    .header-content {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .varsity-crest {
+      width: 50px;
+      height: 50px;
+      background: var(--maroon);
+      border: 2px solid var(--gold);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Graduate', serif;
+      font-size: 1.5rem;
+      color: var(--gold-light);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      position: relative;
+    }
+
+    .brand-text h1 {
+      font-family: 'Graduate', serif;
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+      color: #ffffff;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+    }
+
+    .brand-text p {
+      font-size: 0.8rem;
+      color: var(--gold-light);
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    .system-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(216, 158, 39, 0.4);
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    .status-text {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #f1f5f9;
+    }
+
+    /* ----------------------------------------------------
+       MAIN LAYOUT: NOTEBOOK CONTAINER
+    ---------------------------------------------------- */
+    .app-layout {
+      max-width: 1400px;
+      margin: 20px auto;
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* ----------------------------------------------------
+       COLLEGE SIDEBAR
+    ---------------------------------------------------- */
+    .notebook-sidebar {
+      background: #ffffff;
+      border: 2px solid #e2d9c8;
+      border-radius: 12px;
+      padding: 20px 16px;
+      box-shadow: var(--shadow-md);
+      height: fit-content;
+      position: sticky;
+      top: 96px;
+    }
+
+    .sidebar-title {
+      font-family: 'Graduate', serif;
+      font-size: 0.95rem;
+      color: var(--maroon);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding-bottom: 12px;
+      border-bottom: 2px dashed #e2d9c8;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .agent-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      background: #fdfcf9;
+      border: 1px solid #e5ded0;
+      border-radius: 8px;
+      color: var(--navy);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+      position: relative;
+    }
+
+    .nav-btn:hover {
+      background: var(--gold-soft);
+      border-color: var(--gold);
+      transform: translateX(4px);
+    }
+
+    .nav-btn.active {
+      background: var(--navy);
+      color: #ffffff;
+      border-color: var(--navy);
+      box-shadow: 0 4px 10px rgba(13, 31, 60, 0.25);
+    }
+
+    .nav-btn.active .nav-icon {
+      filter: drop-shadow(0 0 2px var(--gold));
+    }
+
+    .nav-icon {
+      font-size: 1.25rem;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      font-size: 0.7rem;
+      padding: 2px 7px;
+      background: rgba(0,0,0,0.06);
+      border-radius: 999px;
+      font-weight: 700;
+    }
+
+    .nav-btn.active .nav-badge {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    .sidebar-preset-box {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 2px dashed #e2d9c8;
+    }
+
+    .sidebar-preset-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    .preset-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip {
+      font-size: 0.75rem;
+      padding: 5px 10px;
+      background: #f1eddf;
+      border: 1px solid #ded6c2;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+
+    .chip:hover {
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    /* ----------------------------------------------------
+       COLLEGE NOTEBOOK SHEET (RULED PAPER)
+    ---------------------------------------------------- */
+    .notebook-paper {
+      background-color: var(--paper);
+      /* College ruled paper background pattern with left red margin line */
+      background-image: 
+        linear-gradient(90deg, transparent 74px, var(--paper-margin) 74px, var(--paper-margin) 76px, transparent 76px),
+        repeating-linear-gradient(transparent, transparent 29px, var(--paper-rule) 29px, var(--paper-rule) 30px);
+      border: 1px solid #ded5be;
+      border-radius: 12px;
+      box-shadow: 
+        0 1px 3px rgba(0,0,0,0.05),
+        0 10px 24px rgba(0,0,0,0.08),
+        inset 0 0 40px rgba(230, 220, 190, 0.2);
+      min-height: 800px;
+      padding: 32px 32px 48px 105px; /* offset for red margin line */
+      position: relative;
+    }
+
+    /* Spiral Binder Holes on far left */
+    .notebook-paper::before {
+      content: "";
+      position: absolute;
+      top: 24px;
+      left: 22px;
+      bottom: 24px;
+      width: 18px;
+      background-image: radial-gradient(circle, #b8ab96 35%, #fff 40%, transparent 45%);
+      background-size: 18px 45px;
+      background-repeat: repeat-y;
+      opacity: 0.7;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .sheet-header {
+      margin-bottom: 24px;
+      border-bottom: 2px solid var(--navy);
+      padding-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .sheet-title-group h2 {
+      font-family: 'Graduate', serif;
+      font-size: 1.6rem;
+      color: var(--maroon);
+      letter-spacing: 0.5px;
+    }
+
+    .sheet-title-group p {
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+      margin-top: 4px;
+    }
+
+    .sheet-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--navy);
+      background: var(--gold-soft);
+      border: 1px solid var(--gold);
+      padding: 4px 12px;
+      border-radius: 6px;
+    }
+
+    /* ----------------------------------------------------
+       INPUT CONTROLS
+    ---------------------------------------------------- */
+    .input-card {
+      background: rgba(255,255,255,0.92);
+      border: 1px solid #e2d9c8;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: var(--ink);
+      background: #fff;
+      transition: all 0.2s;
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(13, 31, 60, 0.12);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .btn-varsity {
+      background: linear-gradient(135deg, var(--maroon) 0%, var(--maroon-dark) 100%);
+      color: #fff;
+      border: 2px solid var(--gold);
+      padding: 11px 24px;
+      border-radius: 8px;
+      font-family: 'Graduate', serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 10px rgba(110, 16, 31, 0.3);
+      transition: all 0.2s;
+    }
+
+    .btn-varsity:hover {
+      background: linear-gradient(135deg, var(--maroon-dark) 0%, #3d060e 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(110, 16, 31, 0.4);
+    }
+
+    .btn-varsity:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: #f1eddf;
+      border: 1.5px solid #cbd5e1;
+      color: var(--navy);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+
+    .btn-secondary:hover {
+      background: #e5ded0;
+      border-color: var(--navy);
+    }
+
+    /* ----------------------------------------------------
+       STICKY NOTE (DEAN'S NOTE)
+    ---------------------------------------------------- */
+    .sticky-note {
+      background: linear-gradient(145deg, #fff777 0%, #ffea4c 100%);
+      color: #2b2605;
+      padding: 28px 24px 24px 24px;
+      border-radius: 4px;
+      box-shadow: 
+        0 10px 25px rgba(0,0,0,0.18),
+        0 3px 8px rgba(0,0,0,0.12);
+      transform: rotate(-1.5deg);
+      position: relative;
+      margin: 28px 0;
+      max-width: 720px;
+      transition: transform 0.25s ease;
+    }
+
+    .sticky-note:hover {
+      transform: rotate(0deg) scale(1.01);
+    }
+
+    /* Push Pin on Top */
+    .sticky-pin {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 26px;
+      height: 26px;
+      background: radial-gradient(circle at 35% 35%, #ff4b4b, #990000);
+      border-radius: 50%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.4);
+    }
+
+    .sticky-note-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      border-bottom: 1.5px dashed rgba(60, 50, 10, 0.25);
+      padding-bottom: 8px;
+    }
+
+    .sticky-note-title {
+      font-family: 'Graduate', serif;
+      font-size: 1.1rem;
+      color: #5c4302;
+      letter-spacing: 0.5px;
+    }
+
+    .dean-stamp {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #8c1d29;
+      border: 1.5px solid #8c1d29;
+      padding: 2px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transform: rotate(3deg);
+    }
+
+    .sticky-note-body {
+      font-family: 'Caveat', cursive;
+      font-size: 1.35rem;
+      line-height: 1.45;
+      color: #2b2605;
+      white-space: pre-line;
+    }
+
+    /* ----------------------------------------------------
+       STEP LOGS TIMELINE (DEAN)
+    ---------------------------------------------------- */
+    .timeline-container {
+      background: #ffffff;
+      border: 1px solid #e2d9c8;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .timeline-title {
+      font-family: 'Graduate', serif;
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .timeline-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+    }
+
+    .timeline-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding-left: 8px;
+      border-left: 3px solid #cbd5e1;
+      padding-bottom: 10px;
+      position: relative;
+    }
+
+    .timeline-item.success {
+      border-left-color: #10b981;
+    }
+
+    .timeline-item.retry {
+      border-left-color: #f59e0b;
+    }
+
+    .timeline-time {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--ink-muted);
+      background: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .timeline-content {
+      flex: 1;
+    }
+
+    .timeline-agent {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .timeline-desc {
+      font-size: 0.85rem;
+      color: var(--ink);
+      margin-top: 2px;
+    }
+
+    .timeline-badge {
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+
+    .badge-success { background: #d1fae5; color: #065f46; }
+    .badge-retry { background: #fef3c7; color: #92400e; }
+    .badge-plan { background: #e0e7ff; color: #3730a3; }
+
+    /* ----------------------------------------------------
+       FLIP-ABLE FLASHCARDS
+    ---------------------------------------------------- */
+    .flashcards-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0 16px 0;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .flashcards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 32px;
+    }
+
+    .flashcard-scene {
+      perspective: 1000px;
+      height: 200px;
+    }
+
+    .flashcard {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+      cursor: pointer;
+      border-radius: 12px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .flashcard.is-flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 12px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 2px solid #e2d9c8;
+    }
+
+    .card-face-front {
+      background: linear-gradient(135deg, #ffffff 0%, #fdfbf7 100%);
+      color: var(--navy);
+    }
+
+    .card-face-back {
+      background: linear-gradient(135deg, var(--navy) 0%, #152e54 100%);
+      color: #ffffff;
+      transform: rotateY(180deg);
+      border-color: var(--gold);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-number {
+      font-family: 'Graduate', serif;
+      font-size: 0.85rem;
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .card-hint {
+      font-size: 0.72rem;
+      font-weight: 600;
+      opacity: 0.6;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .card-text {
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.4;
+      margin: auto 0;
+    }
+
+    .card-face-back .card-text {
+      font-weight: 400;
+      font-size: 0.9rem;
+      color: #f1f5f9;
+      line-height: 1.5;
+    }
+
+    .card-footer {
+      font-size: 0.75rem;
+      opacity: 0.7;
+      text-align: right;
+    }
+
+    /* ----------------------------------------------------
+       CLICKABLE QUIZ WITH LIVE SCORE
+    ---------------------------------------------------- */
+    .quiz-card {
+      background: #ffffff;
+      border: 2px solid #e2d9c8;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .quiz-scoreboard {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--maroon) 100%);
+      color: #ffffff;
+      padding: 16px 20px;
+      border-radius: 10px;
+      border: 2px solid var(--gold);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .score-metric {
+      font-family: 'Graduate', serif;
+      font-size: 1.5rem;
+      color: var(--gold-light);
+    }
+
+    .score-label {
+      font-size: 0.8rem;
+      color: #e2e8f0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .quiz-progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .quiz-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--gold-light);
+      transition: width 0.3s ease;
+    }
+
+    .mcq-item {
+      padding: 18px 0;
+      border-bottom: 1.5px dashed #e2d9c8;
+    }
+
+    .mcq-item:last-child {
+      border-bottom: none;
+    }
+
+    .mcq-question {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 14px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .mcq-options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .mcq-option {
+      background: #fdfbf7;
+      border: 1.5px solid #cbd5e1;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      color: var(--ink);
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mcq-option:hover:not(:disabled) {
+      background: #f1f5f9;
+      border-color: var(--navy);
+      transform: translateX(3px);
+    }
+
+    .mcq-option.correct {
+      background: #d1fae5 !important;
+      border-color: #10b981 !important;
+      color: #065f46 !important;
+      font-weight: 700;
+    }
+
+    .mcq-option.incorrect {
+      background: #fee2e2 !important;
+      border-color: #ef4444 !important;
+      color: #991b1b !important;
+      font-weight: 700;
+    }
+
+    .mcq-explanation {
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: #eff6ff;
+      border-left: 3px solid #3b82f6;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      color: #1e40af;
+      display: none;
+    }
+
+    /* ----------------------------------------------------
+       NOTES & MARKDOWN DISPLAY
+    ---------------------------------------------------- */
+    .academic-box {
+      background: #ffffff;
+      border: 1px solid #e2d9c8;
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .academic-box h3 {
+      font-family: 'Graduate', serif;
+      font-size: 1.15rem;
+      color: var(--maroon);
+      margin-bottom: 14px;
+      border-bottom: 1px solid #e2d9c8;
+      padding-bottom: 8px;
+    }
+
+    .academic-content {
+      line-height: 1.7;
+      font-size: 0.95rem;
+      color: #334155;
+      white-space: pre-wrap;
+    }
+
+    .key-takeaways-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .key-takeaway-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: var(--gold-soft);
+      border-left: 3px solid var(--gold);
+      padding: 10px 14px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    /* ----------------------------------------------------
+       LOADER SPINNER
+    ---------------------------------------------------- */
+    .loader-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(13, 31, 60, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: #ffffff;
+      gap: 16px;
+    }
+
+    .varsity-spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(216, 158, 39, 0.2);
+      border-top-color: var(--gold-light);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ----------------------------------------------------
+       RESPONSIVE DESIGN
+    ---------------------------------------------------- */
+    @media (max-width: 900px) {
+      .app-layout {
+        grid-template-columns: 1fr;
+      }
+      .notebook-sidebar {
+        position: static;
+        margin-bottom: 16px;
+      }
+      .agent-nav {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      }
+      .notebook-paper {
+        padding: 24px 16px 36px 45px;
+        background-image: 
+          linear-gradient(90deg, transparent 32px, var(--paper-margin) 32px, var(--paper-margin) 34px, transparent 34px),
+          repeating-linear-gradient(transparent, transparent 29px, var(--paper-rule) 29px, var(--paper-rule) 30px);
+      }
+      .notebook-paper::before {
+        left: 8px;
+        width: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- VARSITY HEADER -->
+  <header class="varsity-header">
+    <div class="header-stripe"></div>
+    <div class="header-content">
+      <div class="brand-group">
+        <div class="varsity-crest">H</div>
+        <div class="brand-text">
+          <h1>HACK YOUR COLLEGE LIFE</h1>
+          <p>EST. 2026 &bull; 1ST-YEAR UNDERGRADUATE SURVIVAL SUITE &bull; IEEE AGENTIC AI</p>
+        </div>
+      </div>
+      <div class="system-badge" id="systemStatusBadge">
+        <div class="status-dot"></div>
+        <span class="status-text" id="statusText">Checking NVIDIA NIM Engine...</span>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- LOADER OVERLAY -->
+  <div class="loader-overlay" id="loaderOverlay">
+    <div class="varsity-spinner"></div>
+    <h3 style="font-family:'Graduate', serif; font-size:1.2rem; letter-spacing:1px;" id="loaderTitle">DEAN'S AGENTS DEPLOYING...</h3>
+    <p style="font-size:0.9rem; opacity:0.85;" id="loaderSubtitle">Synthesizing collegiate notes and exam materials...</p>
+  </div>
+
+  <!-- MAIN NOTEBOOK LAYOUT -->
+  <div class="app-layout">
+    
+    <!-- SIDEBAR: AGENT TABS -->
+    <aside class="notebook-sidebar">
+      <div class="sidebar-title">
+        <span>🏛️</span>
+        <span>Collegiate Agents</span>
+      </div>
+      <nav class="agent-nav">
+        <button class="nav-btn active" onclick="switchTab('dean')" id="tabBtn-dean">
+          <span class="nav-icon">🎓</span>
+          <span>Orchestrator Dean</span>
+          <span class="nav-badge">Boss</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('study')" id="tabBtn-study">
+          <span class="nav-icon">📚</span>
+          <span>Study Buddy</span>
+          <span class="nav-badge">Notes</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('youtube')" id="tabBtn-youtube">
+          <span class="nav-icon">🎥</span>
+          <span>YouTube Summarizer</span>
+          <span class="nav-badge">Video</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('research')" id="tabBtn-research">
+          <span class="nav-icon">🔬</span>
+          <span>Research Assistant</span>
+          <span class="nav-badge">Wiki</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('assignment')" id="tabBtn-assignment">
+          <span class="nav-icon">📝</span>
+          <span>Assignment Writer</span>
+          <span class="nav-badge">Solver</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('database')" id="tabBtn-database">
+          <span class="nav-icon">📊</span>
+          <span>Academic Records</span>
+          <span class="nav-badge" style="background:#10b981; color:#fff;" id="dbRecordBadge">DB</span>
+        </button>
+      </nav>
+
+
+      <div class="sidebar-preset-box">
+        <div class="sidebar-preset-title">Freshman 101 Quick Topics</div>
+        <div class="preset-chips">
+          <span class="chip" onclick="applyPreset('Calculus & Limits')">Calculus</span>
+          <span class="chip" onclick="applyPreset('Data Structures & Algorithms')">Data Structs</span>
+          <span class="chip" onclick="applyPreset('Newtonian Mechanics')">Physics</span>
+          <span class="chip" onclick="applyPreset('Digital Logic & Boolean Algebra')">Digital Logic</span>
+          <span class="chip" onclick="applyPreset('Organic Chemistry Basics')">Chemistry</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN NOTEBOOK SHEET -->
+    <main class="notebook-paper">
+
+      <!-- ==============================================
+           TAB 1: ORCHESTRATOR "DEAN"
+      =============================================== -->
+      <section class="tab-content active" id="tab-dean">
+        <div class="sheet-header">
+          <div class="sheet-title-group">
+            <h2>ORCHESTRATOR "DEAN"</h2>
+            <p>Single free-text task &bull; Auto-plans agent pipeline &bull; Retries failures &bull; Final supervisor note</p>
+          </div>
+          <span class="sheet-tag">MASTER ORCHESTRATOR</span>
+        </div>
+
+        <div class="input-card">
+          <div class="form-group">
+            <label class="form-label" for="deanTaskInput">Your Freshman Challenge or Exam Prep Request:</label>
+            <textarea id="deanTaskInput" class="form-textarea" placeholder="E.g., I have a midterm on Calculus tomorrow morning: I need flashcards, Wikipedia research on derivatives, and solutions for limits problems.">I have my freshman Calculus exam tomorrow. I need complete study notes, 8 flashcards, a quiz, and research on differential calculus.</textarea>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <button class="btn-varsity" onclick="runDeanOrchestrator()">
+              <span>🎓</span>
+              <span>SUMMON THE DEAN</span>
+            </button>
+            <span style="font-size:0.8rem; color:var(--ink-muted);">Auto-executes sub-agents with 1 retry guarantee</span>
+          </div>
+        </div>
+
+        <!-- Sticky Note for Dean's Note -->
+        <div id="deanStickyContainer" style="display:none;">
+          <div class="sticky-note">
+            <div class="sticky-pin"></div>
+            <div class="sticky-note-header">
+              <span class="sticky-note-title">MEMORANDUM FROM THE DEAN</span>
+              <span class="dean-stamp">OFFICE OF ACADEMIC AFFAIRS</span>
+            </div>
+            <div class="sticky-note-body" id="deanStickyBody">
+              To the Freshman Class:
+              Review your course deliverables and schedule your active recall sessions today!
+            </div>
+          </div>
+        </div>
+
+        <!-- Orchestration Timeline Logs -->
+        <div id="deanLogsContainer" style="display:none;" class="timeline-container">
+          <div class="timeline-title">
+            <span>📋</span>
+            <span>Dean's Execution Log & Pipeline Steps</span>
+          </div>
+          <div class="timeline-list" id="deanTimelineList"></div>
+        </div>
+
+        <!-- Results Mount Point for Dean -->
+        <div id="deanResultsContainer"></div>
+      </section>
+
+      <!-- ==============================================
+           TAB 2: STUDY BUDDY (Notes + 8 Flashcards + 5 MCQs)
+      =============================================== -->
+      <section class="tab-content" id="tab-study">
+        <div class="sheet-header">
+          <div class="sheet-title-group">
+            <h2>STUDY BUDDY AGENT</h2>
+            <p>Input topic &rarr; Structured notes &bull; 8 Flip-able flashcards &bull; 5 Interactive MCQs</p>
+          </div>
+          <span class="sheet-tag">ACTIVE RECALL SUITE</span>
+        </div>
+
+        <div class="input-card">
+          <div class="form-group">
+            <label class="form-label" for="studyTopicInput">Study Topic / Course Unit:</label>
+            <input type="text" id="studyTopicInput" class="form-input" value="Data Structures & Algorithms" placeholder="E.g. Binary Search Trees, Thermodynamics, Linear Algebra">
+          </div>
+          <button class="btn-varsity" onclick="runStudyBuddy()">
+            <span>📚</span>
+            <span>GENERATE STUDY KIT</span>
+          </button>
+        </div>
+
+        <!-- Output Container -->
+        <div id="studyResults" style="display:none;">
+          <!-- Notes -->
+          <div class="academic-box">
+            <h3>📖 Collegiate Study Notes</h3>
+            <div class="academic-content" id="studyNotesContent"></div>
+          </div>
+
+          <!-- Flashcards Section -->
+          <div class="flashcards-header">
+            <div>
+              <h3 style="font-family:'Graduate', serif; color:var(--navy); font-size:1.15rem;">🗂️ 8 Flip-able Flashcards</h3>
+              <p style="font-size:0.85rem; color:var(--ink-muted);">Click any card to flip between Question and Answer</p>
+            </div>
+            <button class="btn-secondary" onclick="flipAllFlashcards()">
+              <span>🔄</span> Flip All Cards
+            </button>
+          </div>
+          <div class="flashcards-grid" id="flashcardsGrid"></div>
+
+          <!-- Quiz Section -->
+          <div class="quiz-card">
+            <div class="quiz-scoreboard">
+              <div>
+                <div class="score-label">Live Collegiate Quiz Score</div>
+                <div class="score-metric" id="quizScoreText">Score: 0 / 5 (0%)</div>
+                <div class="quiz-progress-bar">
+                  <div class="quiz-progress-fill" id="quizProgressBar"></div>
+                </div>
+              </div>
+              <button class="btn-secondary" style="background:rgba(255,255,255,0.15); color:#fff; border-color:var(--gold);" onclick="resetQuiz()">
+                <span>🔁</span> Reset Quiz
+              </button>
+            </div>
+
+            <div id="mcqContainer"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==============================================
+           TAB 3: YOUTUBE SUMMARIZER
+      =============================================== -->
+      <section class="tab-content" id="tab-youtube">
+        <div class="sheet-header">
+          <div class="sheet-title-group">
+            <h2>YOUTUBE SUMMARIZER AGENT</h2>
+            <p>URL &rarr; youtube-transcript-api &rarr; Summary &bull; Pasted transcript fallback</p>
+          </div>
+          <span class="sheet-tag">LECTURE DIGEST</span>
+        </div>
+
+        <div class="input-card">
+          <div class="form-group">
+            <label class="form-label" for="ytUrlInput">YouTube Video / Lecture URL:</label>
+            <input type="text" id="ytUrlInput" class="form-input" placeholder="https://www.youtube.com/watch?v=..." value="https://www.youtube.com/watch?v=8hly31xKli0">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ytPastedInput">Pasted Transcript (Auto-used if URL has no captions or fails):</label>
+            <textarea id="ytPastedInput" class="form-textarea" placeholder="Paste manual transcript or lecture notes here as fallback..."></textarea>
+          </div>
+          <button class="btn-varsity" onclick="runYouTubeSummarizer()">
+            <span>🎥</span>
+            <span>SUMMARIZE LECTURE</span>
+          </button>
+        </div>
+
+        <div id="ytResults" style="display:none;">
+          <div class="academic-box">
+            <h3 id="ytTitle">🎬 Lecture Summary</h3>
+            <div style="font-size:0.8rem; color:var(--ink-muted); margin-bottom:12px;" id="ytSourceBadge"></div>
+            <div class="academic-content" id="ytSummaryContent"></div>
+            
+            <h4 style="margin-top:20px; font-size:0.95rem; font-weight:700; color:var(--navy);">Key Academic Takeaways:</h4>
+            <div class="key-takeaways-list" id="ytTakeawaysList"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==============================================
+           TAB 4: RESEARCH ASSISTANT (Wikipedia + .md)
+      =============================================== -->
+      <section class="tab-content" id="tab-research">
+        <div class="sheet-header">
+          <div class="sheet-title-group">
+            <h2>RESEARCH ASSISTANT AGENT</h2>
+            <p>Topic + Word Count &rarr; Wikipedia API Search &rarr; Academic Synthesis &bull; Download .md</p>
+          </div>
+          <span class="sheet-tag">WIKIPEDIA SYNTHESIS</span>
+        </div>
+
+        <div class="input-card">
+          <div style="display:grid; grid-template-columns: 2fr 1fr; gap:16px;">
+            <div class="form-group">
+              <label class="form-label" for="researchTopicInput">Research Topic:</label>
+              <input type="text" id="researchTopicInput" class="form-input" value="Artificial intelligence" placeholder="E.g. Quantum Computing, Photosynthesis, French Revolution">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="researchWordCount">Target Word Count:</label>
+              <input type="number" id="researchWordCount" class="form-input" value="350" min="150" max="1500" step="50">
+            </div>
+          </div>
+          <button class="btn-varsity" onclick="runResearchAssistant()">
+            <span>🔬</span>
+            <span>DISCOVER & COMPILE</span>
+          </button>
+        </div>
+
+        <div id="researchResults" style="display:none;">
+          <div class="academic-box">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
+              <h3 id="researchDocTitle" style="margin-bottom:0; border:none;">📄 Research Brief</h3>
+              <button class="btn-secondary" onclick="downloadMarkdown(activeResearchMarkdown, 'Research_Notes.md')">
+                <span>⬇️</span> Download .md File
+              </button>
+            </div>
+            <div style="font-size:0.8rem; color:var(--ink-muted); margin-bottom:14px;" id="researchMeta"></div>
+            <div class="academic-content" id="researchMarkdownDisplay"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==============================================
+           TAB 5: ASSIGNMENT WRITER (.md download)
+      =============================================== -->
+      <section class="tab-content" id="tab-assignment">
+        <div class="sheet-header">
+          <div class="sheet-title-group">
+            <h2>ASSIGNMENT WRITER AGENT</h2>
+            <p>Topic + Question List &rarr; Step-by-Step Analytical Solutions &bull; Download .md</p>
+          </div>
+          <span class="sheet-tag">PROBLEM SOLVER</span>
+        </div>
+
+        <div class="input-card">
+          <div class="form-group">
+            <label class="form-label" for="assignmentTopicInput">Subject / Course Name:</label>
+            <input type="text" id="assignmentTopicInput" class="form-input" value="Data Structures & Algorithms" placeholder="E.g. Physics 101, Calculus, Computer Architecture">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="assignmentQuestionsInput">Question List (One question per line):</label>
+            <textarea id="assignmentQuestionsInput" class="form-textarea" style="min-height:110px;" placeholder="Question 1...&#10;Question 2...">1. Compare the time and space complexity of QuickSort vs MergeSort.
+2. When is a Hash Table preferred over a Balanced Binary Search Tree?
+3. Explain how Dijkstra's Algorithm finds the shortest path in a weighted graph.</textarea>
+          </div>
+          <button class="btn-varsity" onclick="runAssignmentWriter()">
+            <span>📝</span>
+            <span>SOLVE & FORMAT ASSIGNMENT</span>
+          </button>
+        </div>
+
+        <div id="assignmentResults" style="display:none;">
+          <div class="academic-box">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
+              <h3 style="margin-bottom:0; border:none;">📋 Complete Assignment Solutions</h3>
+              <button class="btn-secondary" onclick="downloadMarkdown(activeAssignmentMarkdown, 'Assignment_Submission.md')">
+                <span>⬇️</span> Download .md File
+              </button>
+            </div>
+            <div class="academic-content" id="assignmentMarkdownDisplay"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==============================================
+           TAB 6: ACADEMIC RECORDS & DATABASE
+      =============================================== -->
+      <section class="tab-content" id="tab-database">
+        <div class="sheet-header">
+          <div class="sheet-title-group">
+            <h2>ACADEMIC RECORDS & DATABASE</h2>
+            <p>Persistent SQLite Database (<code>college_life.db</code>) &bull; Freshman GPA &bull; Live Quiz Scores &bull; Saved Artifacts</p>
+          </div>
+          <span class="sheet-tag" style="background:#d1fae5; color:#065f46; border-color:#10b981;">SQLITE CONNECTED</span>
+        </div>
+
+        <!-- Academic Performance KPI Dashboard -->
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap:16px; margin-bottom:24px;">
+          <div class="input-card" style="text-align:center; border:2px solid var(--gold); background:linear-gradient(135deg, #fffdfa 0%, #fff8eb 100%);">
+            <div style="font-size:0.8rem; font-weight:700; color:var(--maroon); text-transform:uppercase; letter-spacing:0.5px;">Freshman Cumulative GPA</div>
+            <div style="font-family:'Graduate', serif; font-size:2.2rem; color:var(--navy); margin:8px 0;" id="dbGpaValue">4.0</div>
+            <div style="font-size:0.75rem; color:var(--ink-muted);">Computed dynamically from quiz attempts</div>
+          </div>
+
+          <div class="input-card" style="text-align:center;">
+            <div style="font-size:0.8rem; font-weight:700; color:var(--navy); text-transform:uppercase; letter-spacing:0.5px;">Avg Quiz Mastery</div>
+            <div style="font-family:'Graduate', serif; font-size:2.2rem; color:#10b981; margin:8px 0;" id="dbQuizAvgValue">0%</div>
+            <div style="font-size:0.75rem; color:var(--ink-muted);" id="dbQuizAttempts">0 Quizzes Taken</div>
+          </div>
+
+          <div class="input-card" style="text-align:center;">
+            <div style="font-size:0.8rem; font-weight:700; color:var(--navy); text-transform:uppercase; letter-spacing:0.5px;">Study Kits Generated</div>
+            <div style="font-family:'Graduate', serif; font-size:2.2rem; color:var(--navy); margin:8px 0;" id="dbStudyKitsCount">0</div>
+            <div style="font-size:0.75rem; color:var(--ink-muted);">Notes & Flashcard Sets</div>
+          </div>
+
+          <div class="input-card" style="text-align:center;">
+            <div style="font-size:0.8rem; font-weight:700; color:var(--navy); text-transform:uppercase; letter-spacing:0.5px;">Total Records Stored</div>
+            <div style="font-family:'Graduate', serif; font-size:2.2rem; color:var(--maroon); margin:8px 0;" id="dbTotalRecords">0</div>
+            <div style="font-size:0.75rem; color:var(--ink-muted);">In <code>college_life.db</code></div>
+          </div>
+        </div>
+
+        <!-- Database Action Buttons -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; flex-wrap:wrap; gap:10px;">
+          <div style="display:flex; gap:8px;">
+            <button class="btn-secondary" onclick="loadAcademicRecords()">
+              <span>🔄</span> Refresh Records
+            </button>
+            <button class="btn-secondary" onclick="exportDatabaseJSON()">
+              <span>💾</span> Export Backup (.json)
+            </button>
+          </div>
+          <button class="btn-secondary" style="color:#ef4444; border-color:#fca5a5;" onclick="clearDatabaseRecords()">
+            <span>🗑️</span> Reset Academic History
+          </button>
+        </div>
+
+        <!-- Academic History Timeline Table -->
+        <div class="academic-box">
+          <h3>📜 Persistent Academic Activity Log</h3>
+          <p style="font-size:0.85rem; color:var(--ink-muted); margin-bottom:16px;">Every study kit, quiz score, YouTube digest, research brief, and Dean orchestration is automatically logged to SQLite.</p>
+          <div id="dbHistoryTimeline" style="display:flex; flex-direction:column; gap:10px;">
+            <div style="text-align:center; padding:24px; color:var(--ink-muted); font-size:0.9rem;">Loading database records...</div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // State variables
+    let currentQuizData = [];
+    let userAnswers = {};
+    let activeResearchMarkdown = "";
+    let activeAssignmentMarkdown = "";
+
+    // Tab Switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+      
+      const targetTab = document.getElementById(`tab-${tabId}`);
+      const targetBtn = document.getElementById(`tabBtn-${tabId}`);
+      if (targetTab) targetTab.classList.add('active');
+      if (targetBtn) targetBtn.classList.add('active');
+
+      if (tabId === 'database') {
+        loadAcademicRecords();
+      }
+    }
+
+
+    // Quick Preset Chips
+    function applyPreset(topic) {
+      document.getElementById('studyTopicInput').value = topic;
+      document.getElementById('researchTopicInput').value = topic;
+      document.getElementById('assignmentTopicInput').value = topic;
+      document.getElementById('deanTaskInput').value = `Prepare me for a college exam on ${topic}. Generate study notes, 8 flashcards, a quiz, and research.`;
+      switchTab('study');
+    }
+
+    // UI Loading Helpers
+    function showLoading(title, subtitle) {
+      const overlay = document.getElementById('loaderOverlay');
+      document.getElementById('loaderTitle').innerText = title || "PROCESSING...";
+      document.getElementById('loaderSubtitle').innerText = subtitle || "Executing collegiate intelligence engine...";
+      overlay.style.display = 'flex';
+    }
+
+    function hideLoading() {
+      document.getElementById('loaderOverlay').style.display = 'none';
+    }
+
+    // Safe API Request Helper
+    async function postAPI(endpoint, payload) {
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        return data;
+      } catch (err) {
+        console.error("Fetch error:", err);
+        return { error: `Network/Client Notice: ${err.message}` };
+      }
+    }
+
+    // Status Check
+    async function checkSystemStatus() {
+      try {
+        const res = await fetch('/api/status');
+        const data = await res.json();
+        const badge = document.getElementById('statusText');
+        if (data.has_nvidia_key) {
+          badge.innerText = `NVIDIA NIM Connected (${data.primary_model})`;
+        } else if (data.has_groq_key) {
+          badge.innerText = `Groq Connected (${data.primary_model})`;
+        } else {
+          badge.innerText = `Demo Mode (NVIDIA key not configured)`;
+        }
+      } catch (e) {
+        document.getElementById('statusText').innerText = "Demo Engine Active";
+      }
+    }
+
+    // ========================================================
+    // 1. STUDY BUDDY AGENT
+    // ========================================================
+    async function runStudyBuddy() {
+      const topic = document.getElementById('studyTopicInput').value.trim();
+      showLoading("STUDY BUDDY DEPLOYED", `Generating notes, 8 flashcards & 5 MCQs for '${topic}'...`);
+      const data = await postAPI('/api/study-buddy', { topic });
+      hideLoading();
+
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+      renderStudyBuddyData(data);
+    }
+
+    function renderStudyBuddyData(data) {
+      document.getElementById('studyResults').style.display = 'block';
+      document.getElementById('studyNotesContent').innerText = data.notes || "No notes available.";
+
+      // Flashcards (exactly 8)
+      const cardsGrid = document.getElementById('flashcardsGrid');
+      cardsGrid.innerHTML = '';
+      const flashcards = data.flashcards || [];
+      flashcards.forEach((card, idx) => {
+        const scene = document.createElement('div');
+        scene.className = 'flashcard-scene';
+        scene.innerHTML = `
+          <div class="flashcard" onclick="this.classList.toggle('is-flipped')">
+            <div class="card-face card-face-front">
+              <div class="card-top">
+                <span class="card-number">CARD #${idx + 1}</span>
+                <span class="card-hint">Click to Flip</span>
+              </div>
+              <div class="card-text">${card.front}</div>
+              <div class="card-footer">Varsity Concept &bull; 🔄</div>
+            </div>
+            <div class="card-face card-face-back">
+              <div class="card-top">
+                <span class="card-number" style="color:var(--gold-light);">ANSWER #${idx + 1}</span>
+                <span class="card-hint" style="color:#cbd5e1;">Click to Flip</span>
+              </div>
+              <div class="card-text">${card.back}</div>
+              <div class="card-footer" style="color:var(--gold-light);">Academic Answer &bull; 🎓</div>
+            </div>
+          </div>
+        `;
+        cardsGrid.appendChild(scene);
+      });
+
+      // Quiz (exactly 5 MCQs)
+      currentQuizData = data.mcqs || [];
+      userAnswers = {};
+      renderQuiz();
+    }
+
+    function flipAllFlashcards() {
+      const cards = document.querySelectorAll('#flashcardsGrid .flashcard');
+      const allFlipped = Array.from(cards).every(c => c.classList.contains('is-flipped'));
+      cards.forEach(c => {
+        if (allFlipped) c.classList.remove('is-flipped');
+        else c.classList.add('is-flipped');
+      });
+    }
+
+    function renderQuiz() {
+      const container = document.getElementById('mcqContainer');
+      container.innerHTML = '';
+      updateLiveScore();
+
+      currentQuizData.forEach((item, qIdx) => {
+        const mcqDiv = document.createElement('div');
+        mcqDiv.className = 'mcq-item';
+        
+        let optionsHtml = '';
+        const optionLetters = ['A', 'B', 'C', 'D'];
+        (item.options || []).forEach((opt, optIdx) => {
+          optionsHtml += `
+            <button class="mcq-option" id="opt-${qIdx}-${optIdx}" onclick="selectQuizOption(${qIdx}, ${optIdx})">
+              <strong style="color:var(--navy);">${optionLetters[optIdx]}.</strong> ${opt}
+            </button>
+          `;
+        });
+
+        mcqDiv.innerHTML = `
+          <div class="mcq-question">
+            <span>Q${qIdx + 1}.</span>
+            <span>${item.question}</span>
+          </div>
+          <div class="mcq-options">${optionsHtml}</div>
+          <div class="mcq-explanation" id="exp-${qIdx}">
+            <strong>💡 Professor's Explanation:</strong> ${item.explanation || "Standard theorem application."}
+          </div>
+        `;
+        container.appendChild(mcqDiv);
+      });
+    }
+
+    function selectQuizOption(qIdx, optIdx) {
+      if (userAnswers[qIdx] !== undefined) return; // already answered
+      userAnswers[qIdx] = optIdx;
+
+      const q = currentQuizData[qIdx];
+      const correctIdx = q.answer_index;
+
+      // Highlight selected & correct
+      const selectedBtn = document.getElementById(`opt-${qIdx}-${optIdx}`);
+      const correctBtn = document.getElementById(`opt-${qIdx}-${correctIdx}`);
+
+      if (optIdx === correctIdx) {
+        if (selectedBtn) selectedBtn.classList.add('correct');
+      } else {
+        if (selectedBtn) selectedBtn.classList.add('incorrect');
+        if (correctBtn) correctBtn.classList.add('correct');
+      }
+
+      // Show explanation
+      const expDiv = document.getElementById(`exp-${qIdx}`);
+      if (expDiv) expDiv.style.display = 'block';
+
+      // Disable buttons for this question
+      (q.options || []).forEach((_, i) => {
+        const btn = document.getElementById(`opt-${qIdx}-${i}`);
+        if (btn) btn.disabled = true;
+      });
+
+      updateLiveScore();
+    }
+
+    function updateLiveScore() {
+      let correct = 0;
+      let totalAnswered = 0;
+      currentQuizData.forEach((q, idx) => {
+        if (userAnswers[idx] !== undefined) {
+          totalAnswered++;
+          if (userAnswers[idx] === q.answer_index) correct++;
+        }
+      });
+
+      const total = currentQuizData.length || 5;
+      const pct = Math.round((correct / total) * 100);
+      document.getElementById('quizScoreText').innerText = `Score: ${correct} / ${total} (${pct}%)`;
+      document.getElementById('quizProgressBar').style.width = `${(totalAnswered / total) * 100}%`;
+
+      // Persist to SQLite Database automatically upon completing quiz
+      if (totalAnswered === total && total > 0 && !window._quizSaved) {
+        window._quizSaved = true;
+        const topic = document.getElementById('studyTopicInput').value.trim() || 'Calculus & Derivatives';
+        postAPI('/api/db/quiz-result', {
+          topic: topic,
+          score: correct,
+          total: total,
+          percentage: pct,
+          answers: userAnswers
+        }).then(res => {
+          if (res && res.stats) {
+            updateDashboardStatsUI(res.stats);
+          }
+        });
+      }
+    }
+
+    function resetQuiz() {
+      window._quizSaved = false;
+      userAnswers = {};
+      renderQuiz();
+    }
+
+
+    // ========================================================
+    // 2. YOUTUBE SUMMARIZER AGENT
+    // ========================================================
+    async function runYouTubeSummarizer() {
+      const url = document.getElementById('ytUrlInput').value.trim();
+      const pasted_transcript = document.getElementById('ytPastedInput').value.trim();
+      
+      showLoading("YOUTUBE DIGEST ENGINE", "Extracting video captions via youtube-transcript-api...");
+      const data = await postAPI('/api/youtube-summarizer', { url, pasted_transcript });
+      hideLoading();
+
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+
+      document.getElementById('ytResults').style.display = 'block';
+      document.getElementById('ytTitle').innerText = `🎬 ${data.title || "Lecture Digest"}`;
+      document.getElementById('ytSourceBadge').innerText = `Source: ${data.transcript_source || "Transcript Engine"} | LLM: ${data.source || "Groq"}`;
+      document.getElementById('ytSummaryContent').innerText = data.summary || "No summary available.";
+
+      const takeawaysList = document.getElementById('ytTakeawaysList');
+      takeawaysList.innerHTML = '';
+      (data.key_takeaways || []).forEach(pt => {
+        const item = document.createElement('div');
+        item.className = 'key-takeaway-item';
+        item.innerHTML = `<span>📌</span><span>${pt}</span>`;
+        takeawaysList.appendChild(item);
+      });
+    }
+
+    // ========================================================
+    // 3. RESEARCH ASSISTANT AGENT (Wikipedia + .md)
+    // ========================================================
+    async function runResearchAssistant() {
+      const topic = document.getElementById('researchTopicInput').value.trim();
+      const word_count = parseInt(document.getElementById('researchWordCount').value, 10) || 350;
+
+      showLoading("RESEARCH ASSISTANT", `Searching Wikipedia & synthesizing ${word_count}-word brief...`);
+      const data = await postAPI('/api/research-assistant', { topic, word_count });
+      hideLoading();
+
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+
+      activeResearchMarkdown = data.markdown || "";
+      document.getElementById('researchResults').style.display = 'block';
+      document.getElementById('researchDocTitle').innerText = `📄 Research Brief: ${data.wikipedia_title || topic}`;
+      document.getElementById('researchMeta').innerHTML = `
+        <strong>Target Words:</strong> ~${data.word_count} | 
+        <strong>Reference:</strong> <a href="${data.wikipedia_url}" target="_blank" style="color:var(--maroon); text-decoration:underline;">Wikipedia Article</a>
+      `;
+      document.getElementById('researchMarkdownDisplay').innerText = data.markdown || data.summary;
+    }
+
+    // ========================================================
+    // 4. ASSIGNMENT WRITER AGENT (.md download)
+    // ========================================================
+    async function runAssignmentWriter() {
+      const topic = document.getElementById('assignmentTopicInput').value.trim();
+      const rawQ = document.getElementById('assignmentQuestionsInput').value.trim();
+      const question_list = rawQ.split('\n').filter(q => q.trim().length > 0);
+
+      showLoading("ASSIGNMENT SOLVER", "Generating step-by-step collegiate solutions...");
+      const data = await postAPI('/api/assignment-writer', { topic, question_list });
+      hideLoading();
+
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+
+      activeAssignmentMarkdown = data.markdown || "";
+      document.getElementById('assignmentResults').style.display = 'block';
+      document.getElementById('assignmentMarkdownDisplay').innerText = data.markdown || "Assignment compiled.";
+    }
+
+    // Markdown Downloader
+    function downloadMarkdown(mdText, filename) {
+      if (!mdText) {
+        alert("No markdown content available to download.");
+        return;
+      }
+      const blob = new Blob([mdText], { type: 'text/markdown;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename || 'College_Document.md';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // ========================================================
+    // 5. ORCHESTRATOR "DEAN"
+    // ========================================================
+    async function runDeanOrchestrator() {
+      const task = document.getElementById('deanTaskInput').value.trim();
+      showLoading("DEAN'S OFFICE ACTIVATED", "Dean Vance is analyzing task, formulating agent pipeline & supervising execution...");
+      const data = await postAPI('/api/dean', { task });
+      hideLoading();
+
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+
+      // Display Sticky Note
+      document.getElementById('deanStickyContainer').style.display = 'block';
+      document.getElementById('deanStickyBody').innerText = data.dean_note || "To the student: Review your materials and excel!";
+
+      // Display Logs
+      const logsContainer = document.getElementById('deanLogsContainer');
+      const list = document.getElementById('deanTimelineList');
+      list.innerHTML = '';
+      logsContainer.style.display = 'block';
+
+      (data.step_logs || []).forEach(log => {
+        const item = document.createElement('div');
+        const isSuccess = log.status === 'SUCCESS';
+        const isRetry = log.status.includes('RETRY');
+        item.className = `timeline-item ${isSuccess ? 'success' : isRetry ? 'retry' : ''}`;
+        
+        let badgeClass = 'badge-plan';
+        if (isSuccess) badgeClass = 'badge-success';
+        if (isRetry) badgeClass = 'badge-retry';
+
+        item.innerHTML = `
+          <div class="timeline-time">${log.timestamp || ""}</div>
+          <div class="timeline-content">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="timeline-agent">${log.agent}</span>
+              <span class="timeline-badge ${badgeClass}">${log.status}</span>
+            </div>
+            <div class="timeline-desc">${log.message}</div>
+          </div>
+        `;
+        list.appendChild(item);
+      });
+
+      // Render executed results
+      const resultsContainer = document.getElementById('deanResultsContainer');
+      resultsContainer.innerHTML = '';
+
+      if (data.results) {
+        if (data.results.study_buddy) {
+          const resBox = document.createElement('div');
+          resBox.className = 'academic-box';
+          resBox.innerHTML = `
+            <h3>📚 Generated Study Buddy Kit</h3>
+            <p style="margin-bottom:12px; font-size:0.9rem;">The Dean dispatched Study Buddy. Notes, 8 Flashcards, and 5 MCQs were generated.</p>
+            <button class="btn-varsity" style="padding:8px 16px; font-size:0.85rem;" onclick="loadDeanStudyResults()">
+              Inspect Full Flashcards & Interactive Quiz &rarr;
+            </button>
+          `;
+          resultsContainer.appendChild(resBox);
+          // Store in global window for quick inspection
+          window._deanStudyData = data.results.study_buddy;
+        }
+
+        if (data.results.research_assistant) {
+          const resBox = document.createElement('div');
+          resBox.className = 'academic-box';
+          activeResearchMarkdown = data.results.research_assistant.markdown || "";
+          resBox.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <h3 style="margin-bottom:0; border:none;">🔬 Research Assistant Brief</h3>
+              <button class="btn-secondary" onclick="downloadMarkdown(activeResearchMarkdown, 'Dean_Research_Brief.md')">
+                ⬇️ Download .md
+              </button>
+            </div>
+            <div class="academic-content" style="max-height:220px; overflow-y:auto; border:1px solid #e2d9c8; padding:12px; border-radius:6px; background:#faf8f0;">
+              ${data.results.research_assistant.summary || "Research summary complete."}
+            </div>
+          `;
+          resultsContainer.appendChild(resBox);
+        }
+
+        if (data.results.assignment_writer) {
+          const resBox = document.createElement('div');
+          resBox.className = 'academic-box';
+          activeAssignmentMarkdown = data.results.assignment_writer.markdown || "";
+          resBox.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <h3 style="margin-bottom:0; border:none;">📝 Assignment Writer Solutions</h3>
+              <button class="btn-secondary" onclick="downloadMarkdown(activeAssignmentMarkdown, 'Dean_Assignment_Solutions.md')">
+                ⬇️ Download .md
+              </button>
+            </div>
+            <div class="academic-content" style="max-height:220px; overflow-y:auto; border:1px solid #e2d9c8; padding:12px; border-radius:6px; background:#faf8f0;">
+              ${data.results.assignment_writer.markdown || "Assignment answers resolved."}
+            </div>
+          `;
+          resultsContainer.appendChild(resBox);
+        }
+      }
+    }
+
+    function loadDeanStudyResults() {
+      if (window._deanStudyData) {
+        renderStudyBuddyData(window._deanStudyData);
+        switchTab('study');
+      }
+    }
+
+    // ========================================================
+    // 6. ACADEMIC RECORDS & DATABASE MANAGEMENT
+    // ========================================================
+    async function loadAcademicRecords() {
+      try {
+        const [statsRes, histRes] = await Promise.all([
+          fetch('/api/db/stats'),
+          fetch('/api/db/history?limit=30')
+        ]);
+        const stats = await statsRes.json();
+        const histData = await histRes.json();
+
+        updateDashboardStatsUI(stats);
+        renderHistoryTimeline(histData.history || []);
+      } catch (err) {
+        console.error("Error loading academic records from SQLite:", err);
+      }
+    }
+
+    function updateDashboardStatsUI(stats) {
+      if (!stats) return;
+      document.getElementById('dbGpaValue').innerText = `${stats.freshman_gpa !== undefined ? stats.freshman_gpa : '4.0'}`;
+      document.getElementById('dbQuizAvgValue').innerText = `${stats.average_quiz_score_pct || 0}%`;
+      document.getElementById('dbQuizAttempts').innerText = `${stats.total_quizzes_taken || 0} Quizzes Taken`;
+      document.getElementById('dbStudyKitsCount').innerText = `${stats.total_study_sessions || 0}`;
+      document.getElementById('dbTotalRecords').innerText = `${stats.total_records || 0}`;
+      document.getElementById('dbRecordBadge').innerText = `${stats.total_records || 0}`;
+    }
+
+    function renderHistoryTimeline(items) {
+      const container = document.getElementById('dbHistoryTimeline');
+      if (!items || items.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding:24px; color:var(--ink-muted);">No records in database yet. Deploy an agent to start building your freshman academic transcript!</div>`;
+        return;
+      }
+
+      container.innerHTML = '';
+      items.forEach(item => {
+        const row = document.createElement('div');
+        row.style.display = 'flex';
+        row.style.alignItems = 'center';
+        row.style.justifyContent = 'space-between';
+        row.style.padding = '12px 16px';
+        row.style.background = '#fdfcf9';
+        row.style.border = '1px solid #e2d9c8';
+        row.style.borderRadius = '8px';
+        row.style.gap = '12px';
+        row.style.flexWrap = 'wrap';
+
+        let badgeColor = 'var(--navy)';
+        if (item.type.includes('Quiz')) badgeColor = '#10b981';
+        if (item.type.includes('Dean')) badgeColor = 'var(--maroon)';
+
+        row.innerHTML = `
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="font-size:1.4rem;">${item.icon || '📌'}</span>
+            <div>
+              <div style="font-weight:700; color:${badgeColor}; font-size:0.95rem;">${item.title}</div>
+              <div style="font-size:0.8rem; color:var(--ink-muted); margin-top:2px;">${item.detail}</div>
+            </div>
+          </div>
+          <div style="font-size:0.75rem; color:var(--ink-muted); font-weight:600; background:#f1eddf; padding:4px 8px; border-radius:4px;">
+            ${new Date(item.timestamp).toLocaleString()}
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    async function exportDatabaseJSON() {
+      try {
+        const [histRes, statsRes] = await Promise.all([
+          fetch('/api/db/history?limit=100'),
+          fetch('/api/db/stats')
+        ]);
+        const histData = await histRes.json();
+        const stats = await statsRes.json();
+        const exportObj = {
+          exported_at: new Date().toISOString(),
+          system: "Hack Your College Life - SQLite Academic Records Backup",
+          stats: stats,
+          records: histData.history || []
+        };
+        const blob = new Blob([JSON.stringify(exportObj, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `College_Life_DB_Backup_${new Date().toISOString().slice(0,10)}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      } catch (err) {
+        alert("Export failed: " + err.message);
+      }
+    }
+
+    async function clearDatabaseRecords() {
+      if (!confirm("Are you sure you want to reset your freshman academic database records?")) return;
+      try {
+        const res = await fetch('/api/db/history', { method: 'DELETE' });
+        const data = await res.json();
+        if (data.status === 'cleared') {
+          alert("Academic database records reset successfully.");
+          loadAcademicRecords();
+        }
+      } catch (err) {
+        alert("Reset error: " + err.message);
+      }
+    }
+
+    // Initialization
+    window.addEventListener('DOMContentLoaded', () => {
+      checkSystemStatus();
+      loadAcademicRecords();
+    });
+  </script>
+</body>
+</html>
+
